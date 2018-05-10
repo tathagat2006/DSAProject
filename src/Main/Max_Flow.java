@@ -61,14 +61,14 @@ public class Max_Flow {
 		// rgraph.get("T").put("B", 0);
 
 		// NUM OF VERTICES.
-		System.out.println("ENTER THE NUMBER OF CITIES");
+		System.out.println("ENTER THE TOTAL SUM OF THE VERTICES INCLUDING THE CITIES AND THE SINK. ");
 		int numcities = scn.nextInt();
 		for (int i = 0; i < numcities; i++) {
 			rgraph.put(scn.next(), new HashMap<String, Integer>());
 		}
 
 		// NUM OF PIPELINES WITH THEIR CAPACITIES.
-		System.out.println("ENTER THE AVAILABLE PIPELINES WITH THERE CAPACITIES");
+		System.out.println("ENTER THE AVAILABLE PIPELINES WITH THERE RESPECTIVE CAPACITIES");
 		int numpipes = scn.nextInt();
 		for (int i = 0; i < numpipes; i++) {
 			String v1 = scn.next();
@@ -78,9 +78,9 @@ public class Max_Flow {
 			rgraph.get(v2).put(v1, 0);
 		}
 
-		System.out.println("ENTER THE SOURCE CITY.");
+		System.out.println("ENTER THE SOURCE CITY OF DRAINAGE. ");
 		srccity = scn.next();
-		System.out.println("ENTER THE DESTINATION CITY");
+		System.out.println("ENTER THE SINK OF THE DRAINAGE. ");
 		destcity = scn.next();
 
 		int oflow = 0;
@@ -136,10 +136,10 @@ public class Max_Flow {
 	private static boolean createLevelGraphFromRGraph() throws Exception {
 		boolean retVal = false;
 
-		LinkedList<DinicPair> queue = new LinkedList<Max_Flow.DinicPair>();
-		HashMap<String, DinicPair> processed = new HashMap<String, Max_Flow.DinicPair>();
+		LinkedList<optPair> queue = new LinkedList<Max_Flow.optPair>();
+		HashMap<String, optPair> processed = new HashMap<String, Max_Flow.optPair>();
 
-		DinicPair pair = new DinicPair();
+		optPair pair = new optPair();
 		pair.vname = "S";
 		pair.psf = "S";
 		pair.level = 0;
@@ -147,7 +147,7 @@ public class Max_Flow {
 
 		queue.addLast(pair);
 		while (queue.size() > 0) {
-			DinicPair rp = queue.removeFirst();
+			optPair rp = queue.removeFirst();
 
 			if (processed.containsKey(rp.vname)) {
 				if (lgraphLevels.get(rp.vname) == rp.level) {
@@ -172,7 +172,7 @@ public class Max_Flow {
 			ArrayList<String> nbrnames = new ArrayList<String>(rgraph.get(rp.vname).keySet());
 			for (String nbrname : nbrnames) {
 				if (!processed.containsKey(nbrname) && rgraph.get(rp.vname).get(nbrname) > 0) {
-					DinicPair np = new DinicPair();
+					optPair np = new optPair();
 					np.vname = nbrname;
 					np.psf = rp.psf + nbrname;
 					np.level = rp.level + 1;
@@ -185,7 +185,7 @@ public class Max_Flow {
 		return retVal;
 	}
 
-	static class DinicPair {
+	static class optPair {
 		String vname;
 		String psf;
 		String avname;
