@@ -87,7 +87,7 @@ public class Max_Flow {
 		while (true) {
 			lgraph = new HashMap<String, HashMap<String, Integer>>();
 			lgraphLevels = new HashMap<String, Integer>();
-			boolean levelGHasPath = createLevelGraphFromRGraph();
+			boolean levelGHasPath = createLevelGraphFromRGraph(srccity , destcity);
 
 			if (levelGHasPath == false) {
 				break;
@@ -133,15 +133,15 @@ public class Max_Flow {
 		return 0;
 	}
 
-	private static boolean createLevelGraphFromRGraph() throws Exception {
+	private static boolean createLevelGraphFromRGraph(String srccity , String destcity) throws Exception {
 		boolean retVal = false;
 
 		LinkedList<optPair> queue = new LinkedList<Max_Flow.optPair>();
 		HashMap<String, optPair> processed = new HashMap<String, Max_Flow.optPair>();
 
 		optPair pair = new optPair();
-		pair.vname = "S";
-		pair.psf = "S";
+		pair.vname = srccity;
+		pair.psf = srccity;
 		pair.level = 0;
 		pair.avname = "";
 
@@ -157,7 +157,7 @@ public class Max_Flow {
 			}
 			processed.put(rp.vname, rp);
 
-			if (rp.vname.equals("T")) {
+			if (rp.vname.equals(destcity)) {
 				retVal = true;
 			}
 
